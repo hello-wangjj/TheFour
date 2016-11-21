@@ -1,10 +1,13 @@
-#!/usr/bin/env python
+#!python3
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
+import os
+print (os.getcwd())
 __author__ = 'wangjj'
 __mtime__ = '20161105上午 12:20'
 
 info = []
+
 with open('./web/new_index.html', 'r') as f:
     soup = BeautifulSoup(f, 'lxml')
     # print(soup)
