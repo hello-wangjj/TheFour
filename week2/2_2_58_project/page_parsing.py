@@ -24,7 +24,7 @@ def get_links_from(channel, pages, who_sells=0):
     soup = BeautifulSoup(wb_data.text, 'lxml')
     if soup.find('td', 't'):
         for link in soup.select('td.t a.t'):
-            item_link = (link.get('href')).split('&')[0]
+            item_link = (link.get('href')).split('?')[0]
             url_list.insert_one({'url': item_link})
             print(item_link)
     else:
@@ -43,8 +43,11 @@ def get_item_info(url):
         category = (soup.select('div.breadCrumb')[0]).stripped_strings
         price = soup.select('span.price_now > i')[0].get_text()
         place = soup.select('div.palce_li > span > i')[0].get_text()
-        item_info.insert_one(
-            {'category': list(category), 'title': title, 'price': price, 'place': place})
+        item_info.insert_one({'category': list(
+            category), 'title': title, 'price': price, 'place': place, 'url': url})
         print({'category': list(category), 'title': title,
-               'price': price, 'place': place})
+               'price': price, 'place': place, 'url': url})
 
+if __name__ == '__main__':
+    # get_links_from('http://hz.58.com/tongxunyw/', '2')
+    get_item_info('http://zhuanzhuan.58.com/detail/795538562757083140z.shtml')

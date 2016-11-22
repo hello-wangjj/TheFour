@@ -18,11 +18,9 @@ def get_channel_urls(url):
     for link in links:
         page_url=url_host+link.get('href')
         print(page_url)
-get_channel_urls(start_url)
 
 channel_list='''
 http://hz.58.com/shouji/
-http://hz.58.com/shoujihao/
 http://hz.58.com/tongxunyw/
 http://hz.58.com/danche/
 http://hz.58.com/fzixingche/
@@ -80,6 +78,7 @@ http://hz.58.com/chengren/
 http://hz.58.com/xiaoyuan/
 http://hz.58.com/ershouqiugou/
 http://hz.58.com/tiaozao/
-http://hz.58.com/tiaozao/
-http://hz.58.com/tiaozao/
 '''
+
+if __name__ == '__main__':
+    get_channel_urls(start_url)
