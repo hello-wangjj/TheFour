@@ -9,6 +9,8 @@ db_urls = [item['url'] for item in page_parsing.url_list.find()]
 index_urls = [item['url'] for item in page_parsing.item_info.find()]
 x = set(db_urls)
 y = set(index_urls)
+rest_urls = x - y
+rest_urls = list(rest_urls)
 
 
 def get_all_links_from(channel):
@@ -18,5 +20,5 @@ def get_all_links_from(channel):
 
 if __name__ == '__main__':
     pool = Pool()
-    pool.map(get_all_links_from,channel_extracter.channel_list.split())
-
+    # pool.map(get_all_links_from, channel_extracter.channel_list.split())
+    pool.map(page_parsing.get_item_info, rest_urls)

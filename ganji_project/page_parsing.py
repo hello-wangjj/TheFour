@@ -14,8 +14,7 @@ url_list = ganji['url_list']
 item_info = ganji['item_info']
 proxy_list = [
     'http://124.88.67.63:80',
-    'http://115.159.185.186:8088',
-    'http://101.53.101.172:9999'
+    # 'http://115.159.185.186:8088',
 ]
 # 随机获取代理IP
 proxy_ip = random.choice(proxy_list)
@@ -60,19 +59,36 @@ def get_links_from(channel, page, who_sell='a1'):
 def get_item_info(url, data=None):
     global headers
     global proxy
+    time.sleep(4)
     wb_data = requests.get(url, headers=headers)
     if wb_data.status_code == 404:
         pass
     else:
+        print(url)
         soup = BeautifulSoup(wb_data.text, 'lxml')
-        data = {
-            'title': soup.find('h1', 'info_titile').get_text(),
-            'price': list(soup.find('span', 'price_now').stripped_strings)[1],
-            'place': list((soup.find('div', 'palce_li')).stripped_strings)[1],
-            'url': url
-        }
-        print(data)
-        item_info.insert_one(data)
+        if soup.find('span', 'soldout_btn'):
+            data = {
+                'url': url,
+                'title': 'sold_out',
+                'status': 1
+            }
+            print(data)
+            item_info.insert_one(data)
+        else:
+            data = {
+                'title': soup.find(
+                    'h1', 'info_titile').get_text(),
+                'price': list(
+                    soup.find(
+                        'span', 'price_now').stripped_strings)[1],
+                'place': list(
+                    (soup.find(
+                        'div', 'palce_li')).stripped_strings)[1],
+                'url': url,
+                'status': 0
+            }
+            print(data)
+            item_info.insert_one(data)
 
 if __name__ == '__main__':
     for i in range(5, 6):

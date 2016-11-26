@@ -10,7 +10,6 @@ headers = {
 proxy_list=[
     'http://124.88.67.63:80',
     'http://218.106.205.145:8080',
-    'http://122.5.227.57:8888',
 ]
 
 for proxy_ip in proxy_list:
